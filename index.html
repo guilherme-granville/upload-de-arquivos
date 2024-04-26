@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+</head>
+
+<body id="corpo">
+    <center>
+        <div id="janela-flutuante">
+            <section>
+                <h1 class="fodase">Upload de Arquivo</h1>
+                <form id="myForm">
+                    <label for="arquivo">Clique <span>aqui</span> para fazer o upload de um arquivo</label><br>
+                    <center><input id="arquivo" name="arquivo" type="file" required><br></center>
+                    <p id="nomeArquivo"></p>
+                    <img id="preview" src="" alt="Pré-visualização da imagem" style="display: none;"/>
+                    <audio id="audioPreview" controls style="display: none;"></audio>
+                    <video id="videoPreview" controls style="display: none;"></video>
+                    <embed id="pdfPreview" type="application/pdf" style="display: none; width: 500px; height: 600px;" />
+                    <center><button type="submit">Fazer upload do Arquivo</button></center>
+                </form>
+            </section>
+        </div>
+    </center>
+       
+</body>
+
+<script>
+    document.getElementById('arquivo').addEventListener('change', function() {
+        var nome = this.files[0].name;
+        var extensao = nome.split('.').pop();
+        document.getElementById('nomeArquivo').textContent = "Nome do arquivo: " + nome;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            if (extensao === 'jpg' || extensao === 'png' || extensao === 'gif') {
+                document.getElementById('preview').src = e.target.result;
+                document.getElementById('preview').style.display = 'block';
+            } else if (extensao === 'mp3' || extensao === 'wav' || extensao === 'ogg') {
+                document.getElementById('audioPreview').src = e.target.result;
+                document.getElementById('audioPreview').style.display = 'block';
+            } else if (extensao === 'mp4' || extensao === 'webm' || extensao === 'ogg') {
+                document.getElementById('videoPreview').src = e.target.result;
+                document.getElementById('videoPreview').style.display = 'block';
+            } else if (extensao === 'pdf') {
+                document.getElementById('pdfPreview').src = e.target.result;
+                document.getElementById('pdfPreview').style.display = 'block';
+            }
+        };
+        reader.readAsDataURL(this.files[0]);
+    });
+    
+</script>
+
+</html>
